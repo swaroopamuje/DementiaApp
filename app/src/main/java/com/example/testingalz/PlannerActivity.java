@@ -61,7 +61,7 @@ public class PlannerActivity extends AppCompatActivity {
             calendar.add(Calendar.MINUTE, 2);
         }
 
-        Intent intent = new Intent(this, ReminderReciever.class);
+        Intent intent = new Intent(this, ReminderReceiver.class);
         intent.putExtra("activity", activity);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, activityList.size(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
 

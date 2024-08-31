@@ -53,6 +53,7 @@
                 android:hint="Password"
                 android:inputType="textPassword" />
 
+
             <Button
                 android:id="@+id/loginButton"
                 android:layout_width="match_parent"
@@ -106,6 +107,13 @@
                 android:layout_marginTop="16dp"
                 android:hint="Confirm Password"
                 android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/registerPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phone Number"
+                android:inputType="phone" />
 
             <Button
                 android:id="@+id/registerButton"

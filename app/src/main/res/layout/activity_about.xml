@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".AboutActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- App Image -->
+            <ImageView
+                android:id="@+id/app_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="24dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/logo"/>
+
+            <!-- App Title -->
+            <TextView
+                android:id="@+id/about_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About This App"
+                android:textSize="24sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- App Details -->
+            <TextView
+                android:id="@+id/app_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CogniCare is an innovative app designed to assist individuals with dementia in managing their daily activities and appointments. It offers features like activity reminders, appointment scheduling, and more to enhance the quality of life for users."
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="24dp"
+                android:lineSpacingExtra="4dp"/>
+
+            <!-- Developers Title -->
+            <TextView
+                android:id="@+id/developer_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Meet the Developers"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Developer Details Grid -->
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:rowCount="2"
+                android:layout_marginBottom="16dp"
+                android:padding="8dp">
+
+                <!-- Developer 1 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_row="0"
+                    android:layout_column="0"
+                    android:layout_columnWeight="1">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="8dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/sidharth"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Sidharth N"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold|italic"/>
+                </LinearLayout>
+
+                <!-- Developer 2 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:layout_columnWeight="1">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="8dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/photo_2024_08_01_20_59_09"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Swaroop A"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold|italic"/>
+                </LinearLayout>
+
+                <!-- Developer 3 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_row="1"
+                    android:layout_column="0"
+                    android:layout_columnWeight="1">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="8dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/sujit"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Sujit Sigamani"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold|italic"/>
+                </LinearLayout>
+
+                <!-- Developer 4 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_row="1"
+                    android:layout_column="1"
+                    android:layout_columnWeight="1">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="8dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/whatsapp_image_2024_07_11_at_17_04_17"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Sujan Ramesh"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold|italic"/>
+                </LinearLayout>
+
+            </GridLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

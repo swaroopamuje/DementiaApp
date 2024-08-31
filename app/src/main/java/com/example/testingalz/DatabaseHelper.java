@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "testProgress.db";
     private static final int DATABASE_VERSION = 2; // Increment the version to 2 for schema change
 
-    // Table to store daily results
+    // Daily Results Table
     private static final String TABLE_DAILY_RESULTS = "daily_results";
     private static final String COLUMN_DATE = "date";
     private static final String COLUMN_NBACK_RESULTS = "nback_results";
@@ -25,13 +25,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_MAZE_GAME_RESULTS = "maze_game_results";
     private static final String COLUMN_TOTAL_TIME = "total_time";
 
-    // Table to store session times
+    // Session Times Table
     private static final String TABLE_SESSION_TIMES = "session_times";
     private static final String COLUMN_SESSION_ID = "session_id";
     private static final String COLUMN_START_TIME = "start_time";
     private static final String COLUMN_END_TIME = "end_time";
 
-    // Table to track daily visits
+    // Daily Visits Table
     private static final String TABLE_DAILY_VISITS = "daily_visits";
     private static final String COLUMN_VISIT_DATE = "visit_date";
 
@@ -127,113 +127,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Methods to add individual results
     public void addNbackResult(int score) {
-        // Get current date to associate with this result
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String currentDate = sdf.format(new Date());
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NBACK_RESULTS, String.valueOf(score));
-        values.put(COLUMN_TOTAL_TIME, getTotalTimeSpent());
-
-        // Update existing row if it exists, else insert new row
-        int rowsAffected = db.update(TABLE_DAILY_RESULTS, values, COLUMN_DATE + " = ?", new String[]{currentDate});
-        if (rowsAffected == 0) {
-            // No row updated, so insert new row
-            values.put(COLUMN_DATE, currentDate);
-            db.insert(TABLE_DAILY_RESULTS, null, values);
-        }
+        updateOrInsertResult(COLUMN_NBACK_RESULTS, score);
     }
 
     public void addMemoryUpdatingResult(int score) {
-        // Get current date to associate with this result
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String currentDate = sdf.format(new Date());
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_MEMORY_UPDATING_RESULTS, String.valueOf(score));
-        values.put(COLUMN_TOTAL_TIME, getTotalTimeSpent());
-
-        // Update existing row if it exists, else insert new row
-        int rowsAffected = db.update(TABLE_DAILY_RESULTS, values, COLUMN_DATE + " = ?", new String[]{currentDate});
-        if (rowsAffected == 0) {
-            // No row updated, so insert new row
-            values.put(COLUMN_DATE, currentDate);
-            db.insert(TABLE_DAILY_RESULTS, null, values);
-        }
+        updateOrInsertResult(COLUMN_MEMORY_UPDATING_RESULTS, score);
     }
+
     public void addCorsiBlockResult(int score) {
-        // Get current date to associate with this result
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String currentDate = sdf.format(new Date());
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_CORSI_BLOCK_RESULTS, String.valueOf(score));
-        values.put(COLUMN_TOTAL_TIME, getTotalTimeSpent());
-
-        // Update existing row if it exists, else insert new row
-        int rowsAffected = db.update(TABLE_DAILY_RESULTS, values, COLUMN_DATE + " = ?", new String[]{currentDate});
-        if (rowsAffected == 0) {
-            // No row updated, so insert new row
-            values.put(COLUMN_DATE, currentDate);
-            db.insert(TABLE_DAILY_RESULTS, null, values);
-        }
+        updateOrInsertResult(COLUMN_CORSI_BLOCK_RESULTS, score);
     }
 
     public void addRandomWordsResult(int score) {
-        // Get current date to associate with this result
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String currentDate = sdf.format(new Date());
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_RANDOM_WORDS_RESULTS, String.valueOf(score));
-        values.put(COLUMN_TOTAL_TIME, getTotalTimeSpent());
-
-        // Update existing row if it exists, else insert new row
-        int rowsAffected = db.update(TABLE_DAILY_RESULTS, values, COLUMN_DATE + " = ?", new String[]{currentDate});
-        if (rowsAffected == 0) {
-            // No row updated, so insert new row
-            values.put(COLUMN_DATE, currentDate);
-            db.insert(TABLE_DAILY_RESULTS, null, values);
-        }
+        updateOrInsertResult(COLUMN_RANDOM_WORDS_RESULTS, score);
     }
 
     public void addCardMatchResult(int score) {
-        // Get current date to associate with this result
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String currentDate = sdf.format(new Date());
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_CARD_GAME_RESULTS, String.valueOf(score));
-        values.put(COLUMN_TOTAL_TIME, getTotalTimeSpent());
-
-        // Update existing row if it exists, else insert new row
-        int rowsAffected = db.update(TABLE_DAILY_RESULTS, values, COLUMN_DATE + " = ?", new String[]{currentDate});
-        if (rowsAffected == 0) {
-            // No row updated, so insert new row
-            values.put(COLUMN_DATE, currentDate);
-            db.insert(TABLE_DAILY_RESULTS, null, values);
-        }
+        updateOrInsertResult(COLUMN_CARD_GAME_RESULTS, score);
     }
 
     public void addMazeGameResult(int score) {
-        // Get current date to associate with this result
+        updateOrInsertResult(COLUMN_MAZE_GAME_RESULTS, score);
+    }
+
+    // Helper method to update or insert results
+    private void updateOrInsertResult(String column, int score) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String currentDate = sdf.format(new Date());
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_MAZE_GAME_RESULTS, String.valueOf(score));
+        values.put(column, String.valueOf(score));
         values.put(COLUMN_TOTAL_TIME, getTotalTimeSpent());
 
-        // Update existing row if it exists, else insert new row
         int rowsAffected = db.update(TABLE_DAILY_RESULTS, values, COLUMN_DATE + " = ?", new String[]{currentDate});
         if (rowsAffected == 0) {
-            // No row updated, so insert new row
             values.put(COLUMN_DATE, currentDate);
             db.insert(TABLE_DAILY_RESULTS, null, values);
         }

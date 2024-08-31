@@ -3,8 +3,12 @@ package com.example.testingalz;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.CalendarView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.CalendarView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,6 +33,7 @@ public class ResultsActivity extends AppCompatActivity {
     private TextView mazeGameResultsTextView;
     private TextView totalTimeTextView;
     private TextView streakTextView;
+    private Button generateReportButton; // Add this line
     private CalendarView calendarView;
     private DatabaseHelper databaseHelper;
 
@@ -53,6 +58,7 @@ public class ResultsActivity extends AppCompatActivity {
         randomWordResultsTextView = findViewById(R.id.random_word_result_text_view);
         corsiBlockResultsTextView = findViewById(R.id.corsi_block_results_text_view);
         mazeGameResultsTextView = findViewById(R.id.maze_game_results_text_view);
+        generateReportButton = findViewById(R.id.generate_report_button); // Initialize the button
 
         // Display results for the current date
         displayResults();
@@ -61,6 +67,9 @@ public class ResultsActivity extends AppCompatActivity {
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) ->
                 displayDailyResults(year, month, dayOfMonth)
         );
+
+        // Set button click listener
+        generateReportButton.setOnClickListener(v -> generateReport());
     }
 
     private void displayResults() {
@@ -167,6 +176,58 @@ public class ResultsActivity extends AppCompatActivity {
             if (cursor != null) {
                 cursor.close();
             }
+        }
+    }
+
+    private void generateReport() {
+        Calendar calendar = Calendar.getInstance();
+        String date = String.format(Locale.getDefault(), "%d-%02d-%02d",
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH) + 1,
+                calendar.get(Calendar.DAY_OF_MONTH));
+
+        Cursor cursor = databaseHelper.getDailyResults(date);
+        if (cursor != null && cursor.moveToFirst()) {
+            generateStatistics(cursor);
+        } else {
+            setNoResults();
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+    }
+
+    private void generateStatistics(Cursor cursor) {
+        if (cursor != null && cursor.moveToFirst()) {
+            int nbackScore = cursor.getInt(cursor.getColumnIndexOrThrow("nback_results"));
+            int memoryUpdatingScore = cursor.getInt(cursor.getColumnIndexOrThrow("memory_updating_results"));
+            int cardGameScore = cursor.getInt(cursor.getColumnIndexOrThrow("card_game_results"));
+            int randomWordScore = cursor.getInt(cursor.getColumnIndexOrThrow("random_words_results"));
+            int corsiBlockScore = cursor.getInt(cursor.getColumnIndexOrThrow("corsi_block_results"));
+            int mazeGameScore = cursor.getInt(cursor.getColumnIndexOrThrow("maze_game_results"));
+
+            int[] scores = {nbackScore, memoryUpdatingScore, cardGameScore, randomWordScore, corsiBlockScore, mazeGameScore};
+            int totalScore = 0;
+            int highestScore = Integer.MIN_VALUE;
+            int lowestScore = Integer.MAX_VALUE;
+            for (int score : scores) {
+                totalScore += score;
+                if (score > highestScore) highestScore = score;
+                if (score < lowestScore) lowestScore = score;
+            }
+            float averageScore = totalScore / (float) scores.length;
+
+            // Here you can show the report using a dialog, toast, or another UI element
+            // For example, showing it in a Toast message
+            String report = String.format(
+                    Locale.getDefault(),
+                    "Date: %s\nAverage Score: %.2f\nHighest Score: %d\nLowest Score: %d",
+                    cursor.getString(cursor.getColumnIndexOrThrow("date")),
+                    averageScore,
+                    highestScore,
+                    lowestScore
+            );
+            Toast.makeText(this, report, Toast.LENGTH_LONG).show();
         }
     }
 }
